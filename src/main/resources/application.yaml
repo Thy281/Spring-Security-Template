@@ -1,0 +1,26 @@
+spring:
+  config:
+    import: optional:classpath:application-local.yaml
+  flyway:
+    enabled: true
+  application:
+    name: demo
+  datasource:
+    url: ${DB_URL:jdbc:mysql://db-prod.exemplo.com:3306/demo_prod?createDatabaseIfNotExist=false&useSSL=true&requireSSL=true}
+    username: ${DB_USERNAME:demo_prod_user}
+    password: ${DB_PASSWORD:troque-esta-senha}
+  mail:
+    host: ${MAIL_HOST:smtp.exemplo.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:no-reply@exemplo.com}
+    password: ${MAIL_PASSWORD:troque-esta-senha}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+jwt:
+  expiration: ${JWT_EXPIRATION:3600000}
+  secret: ${JWT_SECRET:troque-este-segredo-por-uma-chave-longa-e-segura-com-pelo-menos-32-caracteres}
