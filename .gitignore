@@ -34,4 +34,5 @@ build/
 
 application.properties
 application.yml
+requests.http
 src/main/resources/application-local.yaml

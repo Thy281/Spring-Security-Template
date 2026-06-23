@@ -1,0 +1,25 @@
+### GET request to example server
+GET http://localhost:8080/test
+Authorization: Bearer SEU_TOKEN
+
+
+###
+
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "name": "Name",
+  "email": "name@email.com",
+  "password": "name123"
+}
+
+###
+
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "name@email.com",
+  "password": "name123"
+}
