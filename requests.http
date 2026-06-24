@@ -1,7 +1,12 @@
 ### GET request to example server
 GET http://localhost:8080/test
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInN1YiI6Imh1Z29AZW1haWwuY29tIiwiZXhwIjoxNzgyMTkwOTUwfQ.IvRmQjhUiQKI3Sl8MWLyBG5f1M0C-_597nEtRVBzSmA
+#Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInN1YiI6Imd1aWxoZXJtZUBlbWFpbC5jb20iLCJleHAiOjE3ODIyNzU1NjF9.jZP-SQmGo-LUXTJtGjxIU4YmTZjxQI1vaXhjuzVS5Lk
 
+
+###
+
+GET http://localhost:8080/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInN1YiI6Imd1aWxoZXJtZUBlbWFpbC5jb20iLCJleHAiOjE3ODIyNzU1NjF9.jZP-SQmGo-LUXTJtGjxIU4YmTZjxQI1vaXhjuzVS5Lk
 
 ###
 
@@ -9,9 +14,9 @@ POST http://localhost:8080/auth/register
 Content-Type: application/json
 
 {
-  "name": "Hugo",
-  "email": "hugo@email.com",
-  "password": "hugo123"
+  "name": "Guilherme",
+  "email": "guilherme@email.com",
+  "password": "guilherme123"
 }
 
 ###
