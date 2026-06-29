@@ -1,4 +1,6 @@
 package br.com.hyugo.demo.dto.response;
 
-public record LoginResponse(String token) {
+import br.com.hyugo.demo.entity.Role;
+
+public record LoginResponse(String token, Role role) {
 }

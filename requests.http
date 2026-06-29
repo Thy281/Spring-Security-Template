@@ -1,12 +1,19 @@
 ### GET request to example server
 GET http://localhost:8080/test
-#Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInN1YiI6Imd1aWxoZXJtZUBlbWFpbC5jb20iLCJleHAiOjE3ODIyNzU1NjF9.jZP-SQmGo-LUXTJtGjxIU4YmTZjxQI1vaXhjuzVS5Lk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJVU0VSIiwic3ViIjoiZ3VpbGhlcm1lQGVtYWlsLmNvbSIsImV4cCI6MTc4MjYyODE0NX0.flt5nQxc1DoOhJ9ApPvbKPtLWRdsa2DdgHMrSg2Xt8w
+#Authorization: Bearer <token de USER ou ADMIN>
 
 
 ###
 
 GET http://localhost:8080/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInN1YiI6Imd1aWxoZXJtZUBlbWFpbC5jb20iLCJleHAiOjE3ODIyNzU1NjF9.jZP-SQmGo-LUXTJtGjxIU4YmTZjxQI1vaXhjuzVS5Lk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJBRE1JTiIsInN1YiI6Imd1aWxoZXJtZUBtYWlsLmNvbSIsImV4cCI6MTc4MjYyODE0NX0.flt5nQxc1DoOhJ9ApPvbKPtLWRdsa2DdgHMrSg2Xt8w
+#Authorization: Bearer <token de ADMIN>
+
+###
+
+DELETE http://localhost:8080/users/1
+Authorization: Bearer <token de ADMIN>
 
 ###
 
@@ -16,7 +23,21 @@ Content-Type: application/json
 {
   "name": "Guilherme",
   "email": "guilherme@email.com",
-  "password": "guilherme123"
+  "password": "guilherme123",
+  "role": "USER"
+}
+
+###
+
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+Authorization: Bearer <token de ADMIN>
+
+{
+  "name": "Admin",
+  "email": "admin@email.com",
+  "password": "admin123",
+  "role": "ADMIN"
 }
 
 ###

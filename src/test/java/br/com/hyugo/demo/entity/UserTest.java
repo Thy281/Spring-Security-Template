@@ -13,4 +13,14 @@ class UserTest {
 
         assertThat(user.getUsername()).isEqualTo("hugo@email.com");
     }
+
+    @Test
+    void shouldExposeRoleAsGrantedAuthority() {
+        User user = new User();
+        user.setRole(Role.ADMIN);
+
+        assertThat(user.getAuthorities())
+                .extracting(authority -> authority.getAuthority())
+                .containsExactly("ROLE_ADMIN");
+    }
 }

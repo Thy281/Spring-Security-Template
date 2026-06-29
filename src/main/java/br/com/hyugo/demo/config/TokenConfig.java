@@ -1,6 +1,7 @@
 package br.com.hyugo.demo.config;
 
 import br.com.hyugo.demo.config.exception.JwtException;
+import br.com.hyugo.demo.entity.Role;
 import br.com.hyugo.demo.entity.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -35,6 +36,7 @@ public class TokenConfig {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withClaim("userId", user.getId())
+                    .withClaim("role", user.getRole().name())
                     .withSubject(user.getEmail())
                     .withExpiresAt(new Date(System.currentTimeMillis() + expiration))
                     .sign(algorithm);
@@ -53,8 +55,15 @@ public class TokenConfig {
 
             Long userId = decodedJWT.getClaim("userId").asLong();
             String email = decodedJWT.getSubject();
-            return Optional.of(new JWTUserData(userId, email));
+            String roleClaim = decodedJWT.getClaim("role").asString();
+            if (roleClaim == null || roleClaim.isBlank()) {
+                return Optional.empty();
+            }
+            Role role = Role.valueOf(roleClaim);
+            return Optional.of(new JWTUserData(userId, email, role));
         } catch (JWTVerificationException ex) {
+            return Optional.empty();
+        } catch (IllegalArgumentException ex) {
             return Optional.empty();
         }
     }
