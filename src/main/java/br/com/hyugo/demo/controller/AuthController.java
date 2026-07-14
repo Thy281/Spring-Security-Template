@@ -52,7 +52,7 @@ public class AuthController {
             return ResponseEntity.ok(new LoginResponse(token, user.getRole()));
         } catch (AuthenticationException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ErrorResponse("Email ou senha inválidos."));
+                    .body(new ErrorResponse(401, "Unauthorized", "Email ou senha inválidos."));
         }
     }
 
@@ -60,14 +60,14 @@ public class AuthController {
     public ResponseEntity<?> register(@Valid @RequestBody RegisterUserRequest request, Authentication authentication) {
         if (repository.existsByEmail(request.email())) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new ErrorResponse("Já existe um usuário com esse email."));
+                    .body(new ErrorResponse(409, "Conflict", "Já existe um usuário com esse email."));
         }
 
         Role requestedRole = request.role() == null ? Role.USER : request.role();
         if (requestedRole == Role.ADMIN && (authentication == null || authentication.getAuthorities().stream()
                 .noneMatch(authority -> Role.ADMIN.authority().equals(authority.getAuthority())))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(new ErrorResponse("Somente um admin pode cadastrar outro admin."));
+                    .body(new ErrorResponse(403, "Forbidden", "Somente um admin pode cadastrar outro admin."));
         }
 
         User newUser = new User();
@@ -82,7 +82,7 @@ public class AuthController {
                     .body(new RegisterUserResponse(newUser.getName(), newUser.getEmail(), newUser.getRole()));
         } catch (DataIntegrityViolationException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new ErrorResponse("Já existe um usuário com esse email."));
+                    .body(new ErrorResponse(409, "Conflict", "Já existe um usuário com esse email."));
         }
     }
 }

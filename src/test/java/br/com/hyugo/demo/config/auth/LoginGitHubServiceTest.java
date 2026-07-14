@@ -1,5 +1,4 @@
-package br.com.hyugo.demo.config.auth;
-
+package br.com.hyugo.demo.config.auth.github;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -9,7 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LoginGitHubServiceTest {
 
-    private final LoginGitHubService service = new LoginGitHubService();
+    private final LoginGitHubService service = new LoginGitHubService(
+            "client-id",
+            "client-secret",
+            "read:user,user:email",
+            "http://localhost:8080/login/github/auth"
+    );
 
     @Test
     void shouldExtractPrimaryVerifiedEmailFromGitHubEmailList() {

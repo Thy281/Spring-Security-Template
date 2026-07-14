@@ -24,3 +24,16 @@ spring:
 jwt:
   expiration: ${JWT_EXPIRATION:3600000}
   secret: ${JWT_SECRET:troque-este-segredo-por-uma-chave-longa-e-segura-com-pelo-menos-32-caracteres}
+
+github:
+  oauth:
+    client-id: ${GITHUB_OAUTH_CLIENT_ID:}
+    client-secret: ${GITHUB_OAUTH_CLIENT_SECRET:}
+    scope: ${GITHUB_OAUTH_SCOPE:read:user,user:email}
+    redirect-uri: ${GITHUB_OAUTH_REDIRECT_URI:http://localhost:8080/login/github/auth}
+
+google:
+  oauth:
+    client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
+    client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+    redirect-uri: ${GOOGLE_OAUTH_REDIRECT_URI:http://localhost:8080/login/google/auth}

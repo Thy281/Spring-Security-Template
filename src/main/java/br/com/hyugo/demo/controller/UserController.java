@@ -1,5 +1,6 @@
 package br.com.hyugo.demo.controller;
 
+import br.com.hyugo.demo.config.exception.ResourceNotFoundException;
 import br.com.hyugo.demo.dto.response.UserResponse;
 import br.com.hyugo.demo.repository.UserRepository;
 import org.springframework.data.domain.Sort;
@@ -36,7 +37,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
         if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new ResourceNotFoundException("Usuário não encontrado.");
         }
 
         repository.deleteById(id);

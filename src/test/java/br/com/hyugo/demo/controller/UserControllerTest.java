@@ -1,5 +1,6 @@
 package br.com.hyugo.demo.controller;
 
+import br.com.hyugo.demo.config.exception.ResourceNotFoundException;
 import br.com.hyugo.demo.dto.response.UserResponse;
 import br.com.hyugo.demo.entity.Role;
 import br.com.hyugo.demo.entity.User;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -72,9 +74,10 @@ class UserControllerTest {
 
         when(repository.existsById(99L)).thenReturn(false);
 
-        ResponseEntity<Void> response = controller.deleteUserById(99L);
+        assertThatThrownBy(() -> controller.deleteUserById(99L))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Usuário não encontrado.");
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         verify(repository).existsById(99L);
         verify(repository, never()).deleteById(99L);
     }

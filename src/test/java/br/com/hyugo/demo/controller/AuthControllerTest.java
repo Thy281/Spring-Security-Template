@@ -64,7 +64,7 @@ class AuthControllerTest {
         ResponseEntity<?> response = controller.login(new LoginRequest("hugo@email.com", "senha-invalida"));
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
-        assertThat(response.getBody()).isEqualTo(new ErrorResponse("Email ou senha inválidos."));
+        assertThat(response.getBody()).isEqualTo(new ErrorResponse(401, "Unauthorized", "Email ou senha inválidos."));
     }
 
     @Test
@@ -80,7 +80,7 @@ class AuthControllerTest {
         ResponseEntity<?> response = controller.register(new RegisterUserRequest("Hugo", "hugo@email.com", "senha123", null), null);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
-        assertThat(response.getBody()).isEqualTo(new ErrorResponse("Já existe um usuário com esse email."));
+        assertThat(response.getBody()).isEqualTo(new ErrorResponse(409, "Conflict", "Já existe um usuário com esse email."));
         verify(repository, never()).save(any(User.class));
     }
 
@@ -114,7 +114,7 @@ class AuthControllerTest {
         ResponseEntity<?> response = controller.register(new RegisterUserRequest("Admin", "admin@email.com", "senha123", Role.ADMIN), null);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
-        assertThat(response.getBody()).isEqualTo(new ErrorResponse("Somente um admin pode cadastrar outro admin."));
+        assertThat(response.getBody()).isEqualTo(new ErrorResponse(403, "Forbidden", "Somente um admin pode cadastrar outro admin."));
         verify(repository, never()).save(any(User.class));
     }
 
