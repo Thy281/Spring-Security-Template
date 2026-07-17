@@ -1,5 +1,7 @@
 package br.com.hyugo.demo.config;
 
+import br.com.hyugo.demo.entity.User;
+import br.com.hyugo.demo.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import java.util.Optional;
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenConfig tokenConfig;
+    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -28,10 +31,15 @@ public class SecurityFilter extends OncePerRequestFilter {
             Optional<JWTUserData> optUser = tokenConfig.validateToken(token);
             if (optUser.isPresent()) {
                 JWTUserData userData = optUser.get();
+                Optional<User> currentUser = userRepository.findById(userData.userId());
+                if (currentUser.isEmpty()) {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usuário inválido.");
+                    return;
+                }
                 var authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userData,
+                        currentUser.get(),
                         null,
-                        userData.getAuthorities()
+                        currentUser.get().getAuthorities()
 
                 );
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
